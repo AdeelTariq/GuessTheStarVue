@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div @click="$emit('actor-select', actor)" class="card" v-bind:class="{'selected':actor.isSelected}" >
+        <div @click="$emit('actor-select', actor)" class="card" v-bind:class="{'selected':actor.isSelected,'correct':actor.isCorrect}" >
             <img class="card-image"  alt=" "
                 :style="{ backgroundImage: `url('${'https://image.tmdb.org/t/p/w500/' + actor.profile_path}')` }"
                 v-bind:class="{'hidden':!guessMade}" height="200px">
@@ -28,6 +28,9 @@ export default {
     } */
     .selected {
         background-color: orange !important
+    }
+    .correct {
+        background-color: forestgreen !important
     }
     .hidden {
         display: none;

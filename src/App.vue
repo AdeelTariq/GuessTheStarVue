@@ -140,6 +140,10 @@ export default {
         this.score -= 1000;
         this.$toast.error('Wrong! -1000');
         console.log ("Guessed wrong!");
+
+        this.cast.forEach(element => {
+          element.isCorrect = true;
+        });
       }
 
       this.guessMade = true;
