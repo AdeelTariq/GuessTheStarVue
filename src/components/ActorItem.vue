@@ -23,9 +23,9 @@ export default {
 </script>
 
 <style scoped>
-    /* .card :hover {
+    .card :hover {
         background-color: peachpuff
-    } */
+    }
     .selected {
         background-color: orange !important
     }
