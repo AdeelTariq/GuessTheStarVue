@@ -64,9 +64,9 @@ export default {
       this.guessMade = false;
       this.selectedActor = null;
 
-      var randomPage = Math.floor(Math.random() * 18) + 1 // 18 are the total number of pages for this query
+      var randomPage = Math.floor(Math.random() * 3) + 1 // 3 are the total number of pages for this query
       this.axios
-        .get('https://api.themoviedb.org/3/discover/movie?language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&primary_release_date.lte=2019-12-31&vote_count.gte=1000&vote_average.gte=7.5&with_original_language=en&api_key=' + process.env.VUE_APP_TMDB_KEY + '&page=' + randomPage)
+        .get('https://api.themoviedb.org/3/discover/movie?language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&primary_release_date.lte=2019-12-31&vote_count.gte=2&vote_average.gte=6&with_original_language=ur&api_key=' + process.env.VUE_APP_TMDB_KEY + '&page=' + randomPage)
         .then(response => {
           var moviePos = Math.floor(Math.random() * response.data.results.length);
           this.movie = response.data.results [moviePos];
