@@ -6,7 +6,7 @@
                 v-bind:class="{'hidden':!guessMade}" height="200px">
             <div class="card-body">
                 <div class="card-title">{{actor.name}}</div>
-                <div class="card-text font-weight-bold" v-bind:class="{'hidden':!guessMade}">Played {{actor.character}}</div>
+                <div class="card-text font-weight-bold" v-bind:class="{'hidden':!actor.isCorrect}">Played {{actor.character}}</div>
             </div>
         </div>
     </div>

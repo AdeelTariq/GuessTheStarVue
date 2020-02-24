@@ -133,6 +133,10 @@ export default {
           this.$toast.success('Correct! +1000');
           console.log ("Guessed Corretly!");
           correct = true;
+
+          this.cast.forEach(element => {
+          element.isCorrect = true;
+        });
         }
       });
 
