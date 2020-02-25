@@ -1,4 +1,4 @@
-# vuetest
+# Guess the 🌟
 
 ## Project setup
 ```
