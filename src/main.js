@@ -4,7 +4,9 @@ import VueAxios from 'vue-axios'
 import 'bootstrap'; 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import VueBootstrapToasts from "vue-bootstrap-toasts";
-
+import VueConfetti from 'vue-confetti'
+ 
+Vue.use(VueConfetti)
 Vue.use(VueBootstrapToasts);
 Vue.use(VueAxios, axios)
 

@@ -1,40 +1,39 @@
 <template>
   <div id="app" class="container p-4">
+    <nav class="navbar navbar-light navbar-expand-md">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <h1 >Guess the 🌟</h1>
+                <h5 >{{currentVersion.name}}</h5>
 
-        <nav class="navbar navbar-light navbar-expand-md">
-            <div class="container">
-                <a class="navbar-brand" href="#">
-                    <h1 >Guess the 🌟</h1>
-                    <h5 >{{currentVersion.name}}</h5>
-    
-                </a>
-                <button class="navbar-toggler " type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="toggle">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+            </a>
+            <button class="navbar-toggler " type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="toggle">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav mr-auto"></ul>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <!-- Left Side Of Navbar -->
+                <ul class="navbar-nav mr-auto"></ul>
 
-                    <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ml-auto">
-                        <!-- Authentication Links -->
-                            <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    Switch to different version<span class="caret"></span>
-                                </a>
+                <!-- Right Side Of Navbar -->
+                <ul class="navbar-nav ml-auto">
+                    <!-- Authentication Links -->
+                        <li class="nav-item dropdown">
+                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                Switch to different version<span class="caret"></span>
+                            </a>
 
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
 
-                                    <a v-for="version in Versions" v-bind:key="version.name" href="#" class="dropdown-item" v-on:click="switchToVersion(version)" v-bind="{'hidden':currentVersion.name == version.name}">{{version.name}}</a>
-                                    <!-- <a href="#" class="dropdown-item" v-on:click="switchToUrdu" v-bind="{'hidden':currentVersion == Versions.Urdu}">Urdu Movies</a> -->
-                                    <!-- <a href="#" class="dropdown-item" v-on:click="switchToMain" v-bind="{'hidden':currentVersion == Versions.Main}">Famous Movies</a> -->
-                                </div>
-                            </li>
-                    </ul>
-                </div>
+                                <a v-for="version in Versions" v-bind:key="version.name" href="#" class="dropdown-item" v-on:click="switchToVersion(version)" v-bind="{'hidden':currentVersion.name == version.name}">{{version.name}}</a>
+                                <!-- <a href="#" class="dropdown-item" v-on:click="switchToUrdu" v-bind="{'hidden':currentVersion == Versions.Urdu}">Urdu Movies</a> -->
+                                <!-- <a href="#" class="dropdown-item" v-on:click="switchToMain" v-bind="{'hidden':currentVersion == Versions.Main}">Famous Movies</a> -->
+                            </div>
+                        </li>
+                </ul>
             </div>
-        </nav>
+        </div>
+    </nav>
 
     <div class="pb-4">
       <span>Your Score: {{score}}</span>
@@ -189,6 +188,7 @@ export default {
       this.cast.forEach(element => {
         if (element.id == this.selectedActor.id) {
           this.score += 1000;
+          this.celeberate ();
           this.$toast.success('Correct! +1000');
           console.log ("Guessed Corretly!");
           correct = true;
@@ -202,6 +202,7 @@ export default {
       if (!correct) {
         this.score -= 1000;
         this.$toast.error('Wrong! -1000');
+        this.playSound ('http://soundbible.com/grab.php?id=1830&type=mp3');
         console.log ("Guessed wrong!");
 
         this.cast.forEach(element => {
@@ -210,6 +211,34 @@ export default {
       }
 
       this.guessMade = true;
+    },
+
+    celeberate() {
+      this.$confetti.start();
+      this.playSound('http://soundbible.com/grab.php?id=1003&type=mp3');
+      setTimeout(() => {
+          this.$confetti.stop();
+      }, 4000);
+      this.$confetti.update({
+        particles: [
+          {
+            type: 'heart',
+          },
+          {
+            type: 'circle',
+          },
+          {
+            type: 'rect',
+          },
+        ],
+      });
+    },
+
+    playSound (sound) {
+      if(sound) {
+        var audio = new Audio(sound);
+        audio.play();
+      }
     },
 
     shuffle(array) {
