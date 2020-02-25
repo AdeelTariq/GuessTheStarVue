@@ -53,6 +53,10 @@
       <button class="btn btn-success" style="width: 200px;height:48px;" v-on:click="guess" v-bind:class="{'hidden':guessMade}">
         Guess!</button>
     </div>
+    <div class="mx-auto" style="width: 200px;">
+      <button class="btn btn-primary" style="width: 200px;height:48px;" v-on:click="getMovies" v-bind:class="{'hidden':!guessMade}">
+        Next ></button>
+    </div>
     <Toasts
         :show-progress="false"
         :rtl="false"
