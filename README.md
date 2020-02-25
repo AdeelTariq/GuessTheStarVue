@@ -1,5 +1,7 @@
 # Guess the 🌟
 
+Check out the live version [here](https://guessthestar.herokuapp.com/)
+
 ## Project setup
 ```
 npm install
