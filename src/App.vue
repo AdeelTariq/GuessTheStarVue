@@ -1,6 +1,40 @@
 <template>
   <div id="app" class="container p-4">
-    <h1 class="title">Guess the 🌟</h1>
+
+        <nav class="navbar navbar-light navbar-expand-md">
+            <div class="container">
+                <a class="navbar-brand" href="#">
+                    <h1 >Guess the 🌟</h1>
+                    <h5 >{{currentVersion.name}}</h5>
+    
+                </a>
+                <button class="navbar-toggler " type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="toggle">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <!-- Left Side Of Navbar -->
+                    <ul class="navbar-nav mr-auto"></ul>
+
+                    <!-- Right Side Of Navbar -->
+                    <ul class="navbar-nav ml-auto">
+                        <!-- Authentication Links -->
+                            <li class="nav-item dropdown">
+                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                    Switch to different version<span class="caret"></span>
+                                </a>
+
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+
+                                    <a v-for="version in Versions" v-bind:key="version.name" href="#" class="dropdown-item" v-on:click="switchToVersion(version)" v-bind="{'hidden':currentVersion.name == version.name}">{{version.name}}</a>
+                                    <!-- <a href="#" class="dropdown-item" v-on:click="switchToUrdu" v-bind="{'hidden':currentVersion == Versions.Urdu}">Urdu Movies</a> -->
+                                    <!-- <a href="#" class="dropdown-item" v-on:click="switchToMain" v-bind="{'hidden':currentVersion == Versions.Main}">Famous Movies</a> -->
+                                </div>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
 
     <div class="pb-4">
       <span>Your Score: {{score}}</span>
@@ -53,10 +87,35 @@ export default {
       cast: [],
       selectedActor: {},
 
-      guessMade: false
+      guessMade: false,
+
+      Versions: {
+        Main: {
+          name: "Famous Movies",
+          url: "https://api.themoviedb.org/3/discover/movie?language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&primary_release_date.lte=2019-12-31&vote_count.gte=1000&vote_average.gte=7.5&with_original_language=en&api_key=",
+          pages: 18
+        },
+        Urdu: {
+          name: "Urdu Movies",
+          url: "https://api.themoviedb.org/3/discover/movie?language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&primary_release_date.lte=2019-12-31&vote_count.gte=2&vote_average.gte=6&with_original_language=ur&api_key=",
+          pages: 3
+        },
+        Hindi: {
+          name: "Bollywood Movies",
+          url: "https://api.themoviedb.org/3/discover/movie?language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&primary_release_date.lte=2019-12-30&vote_count.gte=50&vote_average.gte=7&with_original_language=hi&api_key=",
+          pages: 5
+        },
+        Punjabi: {
+          name: "Punjabi Movies",
+          url: "https://api.themoviedb.org/3/discover/movie?language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&primary_release_date.lte=2019-12-30&vote_count.gte=2&vote_average.gte=5&with_original_language=pa&api_key=",
+          pages: 3
+        }
+      },
+      currentVersion: {}
     }
   },
   mounted () {
+      this.currentVersion = this.Versions.Main;
       this.getMovies();
   },
   methods: {
@@ -64,9 +123,9 @@ export default {
       this.guessMade = false;
       this.selectedActor = null;
 
-      var randomPage = Math.floor(Math.random() * 18) + 1 // 18 are the total number of pages for this query
+      var randomPage = Math.floor(Math.random() * this.currentVersion.pages) + 1 // total number of pages for this query
       this.axios
-        .get('https://api.themoviedb.org/3/discover/movie?language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&primary_release_date.lte=2019-12-31&vote_count.gte=1000&vote_average.gte=7.5&with_original_language=en&api_key=' + process.env.VUE_APP_TMDB_KEY + '&page=' + randomPage)
+        .get(this.currentVersion.url + process.env.VUE_APP_TMDB_KEY + '&page=' + randomPage)
         .then(response => {
           var moviePos = Math.floor(Math.random() * response.data.results.length);
           this.movie = response.data.results [moviePos];
@@ -170,6 +229,11 @@ export default {
       }
 
       return array;
+    },
+
+    switchToVersion (version) {
+      this.currentVersion = version;
+      this.getMovies();
     }
   }
 }
@@ -182,7 +246,7 @@ export default {
     margin: 0;
     padding: 0;
   }
-  .title {
+  .text-center {
     text-align: center;
   }
   body {
