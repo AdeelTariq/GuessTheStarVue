@@ -7,8 +7,9 @@
             </div>
             <div class="col">
                 <div class=" card-body">
+                    <img class="float-right" height="40px" src="https://www.themoviedb.org/assets/2/v4/logos/408x161-powered-by-rectangle-blue-10d3d41d2a0af9ebcb85f7fb62ffb6671c15ae8ea9bc82a2c6941f223143409e.png">
                     <h3 class="card-title">{{movie.title}}</h3>
-                    <p class="card-text">{{movie.overview}}</p>
+                    <p class="card-text float-none">{{movie.overview}}</p>
                 </div>
             </div>
         </div>
