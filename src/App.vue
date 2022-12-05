@@ -47,7 +47,7 @@
         Next ></button>
     </div>
     <br>
-    <Actors v-bind:actors="actors" v-bind:guessMade="guessMade" v-on:actor-select="actorSelect"/>
+    <ActorsList v-bind:actors="actors" v-bind:guessMade="guessMade" v-on:actor-select="actorSelect"/>
     <br><br>
     <div class="mx-auto" style="width: 200px;">
       <button class="btn btn-success" style="width: 200px;height:48px;" v-on:click="guess" v-bind:class="{'hidden':guessMade}">
@@ -69,13 +69,13 @@
 <script>
 
 import MovieItem from "./components/MovieItem";
-import Actors from "./components/Actors";
+import ActorsList from "./components/ActorsList";
 
 export default {
   name: 'App',
   components: {
     MovieItem,
-    Actors
+    ActorsList
   },
   data () {
     return {

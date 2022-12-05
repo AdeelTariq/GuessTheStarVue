@@ -16,7 +16,7 @@
 import ActorItem from "./ActorItem";
 
 export default {
-    name: "Actors",
+    name: "ActorsList",
     components: {
         ActorItem
     },
